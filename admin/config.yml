@@ -8,6 +8,7 @@ collections:
     label: "Articole"
     folder: "articles"
     create: true
+    format: "json"
     slug: "{{slug}}"
     fields:
       - {label: "Titlu", name: "title", widget: "string"}
