@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actualmoment — Buletin de actualitate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14192B;
+    --bg-panel: #1B2138;
+    --bg-panel-2: #202748;
+    --text: #F1EFEA;
+    --text-dim: #9BA0BD;
+    --amber: #E8A33D;
+    --teal: #4FB7B3;
+    --line: #313A5E;
+    --font-display: 'League Gothic', 'Archivo Black', sans-serif;
+    --font-body: 'Manrope', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--amber); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+
+  .ticker-bar {
+    background: var(--amber);
+    color: var(--bg);
+    overflow: hidden;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .ticker-track {
+    display: inline-flex;
+    animation: scroll-ticker 32s linear infinite;
+    padding: 7px 0;
+  }
+  .ticker-track span {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    padding: 0 28px;
+    border-right: 1px solid rgba(20,25,43,0.3);
+  }
+  @keyframes scroll-ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track { animation: none; }
+  }
+
+  header.masthead {
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--line);
+  }
+  .masthead-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 28px 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 20px;
+  }
+  .masthead-title {
+    font-family: var(--font-display);
+    font-size: clamp(46px, 8vw, 78px);
+    letter-spacing: 0.01em;
+    line-height: 0.85;
+    text-transform: uppercase;
+  }
+  .masthead-title .dot { color: var(--amber); }
+  .masthead-sub {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .live-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--amber);
+    display: inline-block;
+    animation: pulse 1.6s ease-in-out infinite;
+    box-shadow: 0 0 8px var(--amber);
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  .studio-clock {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    padding: 14px 22px;
+    text-align: right;
+    min-width: 200px;
+  }
+  .studio-clock .time {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--amber);
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+  .studio-clock .date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+  @media (max-width: 600px) {
+    .masthead-inner { grid-template-columns: 1fr; }
+    .studio-clock { text-align: left; }
+  }
+
+  nav.filters {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: var(--bg-panel);
+    cursor: pointer;
+    color: var(--text-dim);
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .filter-btn.active { background: var(--amber); border-color: var(--amber); color: var(--bg); font-weight: 700; }
+
+  main {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 24px 24px 60px;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 28px;
+  }
+  @media (max-width: 780px) {
+    main { grid-template-columns: 1fr; }
+  }
+
+  .lead-story {
+    background: var(--bg-panel);
+    border-left: 4px solid var(--amber);
+    border-radius: 4px;
+    padding: 26px 26px 24px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .lead-story:hover { background: var(--bg-panel-2); }
+
+  .dateline {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .dateline .tag {
+    background: var(--amber);
+    color: var(--bg);
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-weight: 700;
+    font-size: 10px;
+  }
+  .lead-story h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.02;
+    margin-bottom: 12px;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+  }
+  .lead-story p.dek {
+    font-size: 16px;
+    color: var(--text-dim);
+    max-width: 60ch;
+  }
+  .byline {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 14px;
+  }
+
+  .story-item {
+    background: var(--bg-panel);
+    border-left: 3px solid var(--teal);
+    border-radius: 4px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .story-item:hover { background: var(--bg-panel-2); border-color: var(--amber); }
+  .story-item h3 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  .story-item p.dek {
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+
+  aside > * + * { margin-top: 24px; }
+  .sidebar-head {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+  }
+  .sidebar-item {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    gap: 14px;
+    cursor: pointer;
+  }
+  .sidebar-item:last-child { border-bottom: none; }
+  .sidebar-item:hover h4 { color: var(--amber); }
+  .sidebar-item .rank {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--teal);
+    line-height: 1.2;
+  }
+  .sidebar-item h4 {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+    transition: color 0.15s;
+  }
+  .sidebar-item .time {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  .about-box {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 20px;
+  }
+  .about-box p {
+    font-size: 13px;
+    line-height: 1.55;
+    margin-bottom: 14px;
+    color: var(--text-dim);
+  }
+  .about-box p strong { color: var(--text); }
+  .about-box input {
+    width: 100%;
+    padding: 10px 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: var(--bg);
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .about-box input::placeholder { color: var(--text-dim); }
+  .about-box button {
+    width: 100%;
+    padding: 10px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: var(--amber);
+    color: var(--bg);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .about-box button:hover { opacity: 0.85; }
+
+  footer {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 24px 24px 40px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="ticker-bar">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div>
+      <div class="masthead-title">ACTUALMOMENT<span class="dot">.</span></div>
+      <div class="masthead-sub"><span class="live-dot"></span> ÎN DIRECT &nbsp;•&nbsp; Chișinău, MD</div>
+    </div>
+    <div class="studio-clock">
+      <div class="time" id="clock-time"></div>
+      <div class="date" id="clock-date"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="filters" id="filters"></nav>
+
+<main>
+  <section id="feed"></section>
+
+  <aside>
+    <div>
+      <div class="sidebar-head">Cele mai citite</div>
+      <div id="most-read"></div>
+    </div>
+
+    <div class="about-box">
+      <p><strong>Buletinul zilnic.</strong> Un rezumat scurt, direct în inbox, în fiecare dimineață.</p>
+      <input type="email" placeholder="adresa@email.md">
+      <button onclick="alert('Mulțumim! (demo — abonare neconectată încă)')">Abonează-te</button>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  <span>© 2026 Actualmoment — buletin independent de actualitate</span>
+  <span>Redacție &nbsp;·&nbsp; Contact &nbsp;·&nbsp; RSS</span>
+</footer>
+
+<script>
+const CATEGORIES = ["Toate","Politică","Economie","Societate","Tehnologie","Externe"];
+
+const ARTICLES = [
+  {
+    cat: "Politică", tag: "URGENT",
+    title: "Parlamentul dezbate azi pachetul de reforme administrative",
+    dek: "Proiectul, aflat pe agenda de dimineață, propune reorganizarea a trei ministere și stârnește reacții contradictorii în coaliție.",
+    place: "CHIȘINĂU", time: "azi, 09:14", author: "Redacția Politic", lead: true, reads: 1
+  },
+  {
+    cat: "Economie", tag: "",
+    title: "Leul moldovenesc rămâne stabil în fața presiunilor externe",
+    dek: "Banca Națională a intervenit marginal pe piața valutară, susțin analiștii citați de agențiile locale.",
+    place: "CHIȘINĂU", time: "azi, 08:40", author: "Desk Economic", reads: 2
+  },
+  {
+    cat: "Tehnologie", tag: "",
+    title: "Un start-up local lansează o platformă de educație bazată pe AI",
+    dek: "Aplicația promite lecții personalizate pentru elevii de liceu, cu primele teste în școli pilot din toamnă.",
+    place: "IAȘI", time: "ieri, 19:02", author: "Desk Tech", reads: 3
+  },
+  {
+    cat: "Societate", tag: "ACTUALIZAT",
+    title: "Val de căldură așteptat în weekend, autoritățile emit avertizare",
+    dek: "Temperaturile ar putea depăși 36°C în sudul țării; se recomandă evitarea efortului fizic în orele de amiază.",
+    place: "CHIȘINĂU", time: "azi, 07:55", author: "Desk Societate", reads: 4
+  },
+  {
+    cat: "Externe", tag: "",
+    title: "Summit regional pe tema securității energetice, programat luna viitoare",
+    dek: "Mai multe state din regiune confirmă participarea, pe fondul discuțiilor despre diversificarea furnizorilor.",
+    place: "BRUXELLES", time: "ieri, 16:20", author: "Desk Extern", reads: 5
+  },
+  {
+    cat: "Economie", tag: "",
+    title: "Exporturile de produse agricole cresc cu 8% față de anul trecut",
+    dek: "Datele preliminare arată o cerere mai mare din partea partenerilor din Uniunea Europeană.",
+    place: "CHIȘINĂU", time: "ieri, 14:10", author: "Desk Economic"
+  },
+  {
+    cat: "Societate", tag: "",
+    title: "Proiect de renovare a trei parcuri urbane, aprobat de consiliul local",
+    dek: "Lucrările ar urma să înceapă în primăvara viitoare, cu un buget dedicat spațiilor verzi.",
+    place: "CHIȘINĂU", time: "acum 2 zile", author: "Desk Local"
+  },
+  {
+    cat: "Tehnologie", tag: "",
+    title: "Numărul utilizatorilor de plăți contactless continuă să crească",
+    dek: "Băncile locale raportează o adopție accelerată în rândul comercianților mici.",
+    place: "CHIȘINĂU", time: "acum 2 zile", author: "Desk Tech"
+  },
+];
+
+const TICKER_ITEMS = [
+  "PARLAMENT — ședință extraordinară convocată pentru ora 14:00",
+  "METEO — cod galben de caniculă în sudul țării",
+  "ECONOMIE — cursul valutar rămâne stabil",
+  "SPORT — echipa națională câștigă amicalul de aseară",
+  "TEHNOLOGIE — lansare locală de aplicație educațională"
+];
+
+function renderTicker() {
+  const el = document.getElementById('ticker');
+  const items = [...TICKER_ITEMS, ...TICKER_ITEMS];
+  el.innerHTML = items.map(t => `<span>${t}</span>`).join('');
+}
+
+function renderClock() {
+  const timeEl = document.getElementById('clock-time');
+  const dateEl = document.getElementById('clock-date');
+  function update() {
+    const now = new Date();
+    timeEl.textContent = now.toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    dateEl.textContent = now.toLocaleDateString('ro-RO', { weekday: 'short', day: '2-digit', month: 'short' }).toUpperCase();
+  }
+  update();
+  setInterval(update, 1000);
+}
+
+function renderFilters(active) {
+  const nav = document.getElementById('filters');
+  nav.innerHTML = CATEGORIES.map(c =>
+    `<button class="filter-btn ${c === active ? 'active' : ''}" data-cat="${c}">${c}</button>`
+  ).join('');
+  nav.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      renderFilters(btn.dataset.cat);
+      renderFeed(btn.dataset.cat);
+    });
+  });
+}
+
+function renderFeed(filter) {
+  const feed = document.getElementById('feed');
+  const list = ARTICLES.filter(a => filter === "Toate" || a.cat === filter);
+  feed.innerHTML = '';
+
+  if (list.length === 0) {
+    feed.innerHTML = `<p style="font-family: var(--font-mono); font-size: 13px; color: var(--text-dim);">Nicio știre în această categorie momentan.</p>`;
+    return;
+  }
+
+  const lead = list.find(a => a.lead) || list[0];
+  const rest = list.filter(a => a !== lead);
+
+  const leadEl = document.createElement('div');
+  leadEl.className = 'lead-story';
+  leadEl.innerHTML = `
+    <div class="dateline">${lead.tag ? `<span class="tag">${lead.tag}</span>` : ''} ${lead.place} · ${lead.time} · ${lead.cat}</div>
+    <h2>${lead.title}</h2>
+    <p class="dek">${lead.dek}</p>
+    <div class="byline">— ${lead.author}</div>
+  `;
+  feed.appendChild(leadEl);
+
+  rest.forEach((a) => {
+    const item = document.createElement('div');
+    item.className = 'story-item';
+    item.innerHTML = `
+      <div class="dateline">${a.tag ? `<span class="tag">${a.tag}</span>` : ''} ${a.place} · ${a.time} · ${a.cat}</div>
+      <h3>${a.title}</h3>
+      <p class="dek">${a.dek}</p>
+    `;
+    feed.appendChild(item);
+  });
+}
+
+function renderMostRead() {
+  const el = document.getElementById('most-read');
+  const ranked = [...ARTICLES].filter(a => a.reads).sort((a,b) => a.reads - b.reads).slice(0,5);
+  el.innerHTML = ranked.map((a, i) => `
+    <div class="sidebar-item">
+      <div class="rank">${i+1}</div>
+      <div>
+        <h4>${a.title}</h4>
+        <div class="time">${a.cat} · ${a.time}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+renderTicker();
+renderClock();
+renderFilters("Toate");
+renderFeed("Toate");
+renderMostRead();
+</script>
+
+</body>
+</html>
