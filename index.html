@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Actualmoment — Buletin de actualitate</title>
+<title>actualmoment.md — Buletin de actualitate</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,600&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #14192B;
-    --bg-panel: #1B2138;
-    --bg-panel-2: #202748;
-    --text: #F1EFEA;
-    --text-dim: #9BA0BD;
-    --amber: #E8A33D;
-    --teal: #4FB7B3;
-    --line: #313A5E;
-    --font-display: 'League Gothic', 'Archivo Black', sans-serif;
+    --bg: #FFFFFF;
+    --bg-panel: #F4F8FB;
+    --bg-panel-2: #E7F0F7;
+    --text: #1B3A5C;
+    --text-dim: #5C7C99;
+    --amber: #E63625;
+    --teal: #2E6FA8;
+    --line: #DCE7F0;
+    --font-display: 'Playfair Display', 'Georgia', serif;
     --font-body: 'Manrope', sans-serif;
     --font-mono: 'Space Mono', monospace;
   }
@@ -79,10 +79,11 @@
   }
   .masthead-title {
     font-family: var(--font-display);
+    font-weight: 900;
+    font-style: italic;
     font-size: clamp(46px, 8vw, 78px);
-    letter-spacing: 0.01em;
-    line-height: 0.85;
-    text-transform: uppercase;
+    letter-spacing: 0.005em;
+    line-height: 0.9;
   }
   .masthead-title .dot { color: var(--amber); }
   .masthead-sub {
@@ -158,27 +159,192 @@
   .filter-btn.active { background: var(--amber); border-color: var(--amber); color: var(--bg); font-weight: 700; }
 
   main {
-    max-width: 1120px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 24px 24px 60px;
+  }
+
+  .magazine-grid {
     display: grid;
-    grid-template-columns: 1.6fr 1fr;
+    grid-template-columns: 2fr 1fr;
+    gap: 28px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 780px) {
+    .magazine-grid { grid-template-columns: 1fr; }
+  }
+
+  .hero-story {
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    min-height: 420px;
+    display: flex;
+    align-items: flex-end;
+    background: var(--bg-panel) linear-gradient(160deg, var(--bg-panel-2), var(--bg-panel));
+    border: 1px solid var(--line);
+  }
+  .hero-story .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-story .hero-overlay {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 32px;
+    background: linear-gradient(0deg, rgba(27,58,92,0.94) 10%, rgba(27,58,92,0.35) 70%, transparent 100%);
+  }
+  .hero-story h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(30px, 4.2vw, 46px);
+    line-height: 1.08;
+    margin-bottom: 12px;
+    color: #FFFFFF;
+  }
+  .hero-story p.dek {
+    font-size: 16px;
+    color: #FFFFFF;
+    max-width: 60ch;
+  }
+  .hero-story .byline {
+    color: #FFFFFF;
+  }
+  .hero-story .dateline {
+    color: #FFFFFF;
+  }
+  .hero-story .share-row a {
+    border-color: rgba(255,255,255,0.4);
+    color: #FFFFFF;
+  }
+  .hero-story .share-row a:hover {
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .hero-side {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .hero-side-item {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    transition: background 0.15s;
+  }
+  .hero-side-item:hover { background: var(--bg-panel-2); }
+  .hero-side-item .thumb {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    display: block;
+    background: var(--bg-panel-2);
+  }
+  .hero-side-item .side-body { padding: 14px 16px; }
+  .hero-side-item h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .hero-side-item p.dek {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.45;
+  }
+
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: var(--amber);
+    border-bottom: 2px solid var(--line);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+
+  .magazine-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  @media (max-width: 900px) {
+    .magazine-cards { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .magazine-cards { grid-template-columns: 1fr; }
+  }
+
+  .mag-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s;
+  }
+  .mag-card:hover { background: var(--bg-panel-2); transform: translateY(-2px); }
+  .mag-card .thumb {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+    background: var(--bg-panel-2);
+  }
+  .mag-card .card-body { padding: 16px 18px 18px; }
+  .mag-card h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .mag-card p.dek {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+  .share-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .share-row a {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 5px 10px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    color: var(--text-dim);
+    transition: all 0.15s;
+  }
+  .share-row a:hover { border-color: var(--teal); color: var(--teal); }
+
+  .sidebar-column {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
     gap: 28px;
   }
   @media (max-width: 780px) {
-    main { grid-template-columns: 1fr; }
+    .sidebar-column { grid-template-columns: 1fr; }
   }
-
-  .lead-story {
-    background: var(--bg-panel);
-    border-left: 4px solid var(--amber);
-    border-radius: 4px;
-    padding: 26px 26px 24px;
-    margin-bottom: 20px;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .lead-story:hover { background: var(--bg-panel-2); }
 
   .dateline {
     font-family: var(--font-mono);
@@ -199,48 +365,6 @@
     border-radius: 2px;
     font-weight: 700;
     font-size: 10px;
-  }
-  .lead-story h2 {
-    font-family: var(--font-display);
-    font-size: clamp(28px, 4vw, 42px);
-    line-height: 1.02;
-    margin-bottom: 12px;
-    letter-spacing: 0.005em;
-    text-transform: uppercase;
-  }
-  .lead-story p.dek {
-    font-size: 16px;
-    color: var(--text-dim);
-    max-width: 60ch;
-  }
-  .byline {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-dim);
-    margin-top: 14px;
-  }
-
-  .story-item {
-    background: var(--bg-panel);
-    border-left: 3px solid var(--teal);
-    border-radius: 4px;
-    padding: 18px 20px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
-  }
-  .story-item:hover { background: var(--bg-panel-2); border-color: var(--amber); }
-  .story-item h3 {
-    font-family: var(--font-display);
-    font-size: 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.005em;
-    line-height: 1.15;
-    margin-bottom: 6px;
-  }
-  .story-item p.dek {
-    font-size: 14px;
-    color: var(--text-dim);
   }
 
   aside > * + * { margin-top: 24px; }
@@ -281,6 +405,57 @@
     font-size: 10px;
     color: var(--text-dim);
     margin-top: 4px;
+  }
+
+  .fx-box {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 20px;
+  }
+  .fx-box .fx-head {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+  .fx-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+  }
+  .fx-table th {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    text-align: right;
+    padding-bottom: 8px;
+    font-weight: 600;
+  }
+  .fx-table th:first-child { text-align: left; }
+  .fx-table td {
+    font-size: 14px;
+    padding: 8px 0;
+    border-top: 1px solid var(--line);
+    text-align: right;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .fx-table td:first-child {
+    text-align: left;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .fx-table td.up { color: var(--teal); }
+  .fx-table td.down { color: var(--amber); }
+  .fx-updated {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 10px;
+    font-family: var(--font-mono);
   }
 
   .about-box {
@@ -351,7 +526,7 @@
 <header class="masthead">
   <div class="masthead-inner">
     <div>
-      <div class="masthead-title">ACTUALMOMENT<span class="dot">.</span></div>
+      <div class="masthead-title">ACTUALMOMENT<span class="dot">.</span>MD</div>
       <div class="masthead-sub"><span class="live-dot"></span> ÎN DIRECT &nbsp;•&nbsp; Chișinău, MD</div>
     </div>
     <div class="studio-clock">
@@ -364,24 +539,63 @@
 <nav class="filters" id="filters"></nav>
 
 <main>
-  <section id="feed"></section>
+  <div class="magazine-grid" id="hero-zone"></div>
+  <div class="section-heading">Toate știrile</div>
+  <div class="magazine-cards" id="feed"></div>
+</main>
 
+<div class="sidebar-column">
+  <div></div>
   <aside>
+    <div class="fx-box">
+      <div class="fx-head">Meteo Chișinău</div>
+      <div id="weather-box">
+        <div class="fx-row"><span class="fx-pair">Se încarcă...</span></div>
+      </div>
+    </div>
+
+    <div class="fx-box">
+      <div class="fx-head">Curs valutar (MDL)</div>
+      <div id="fx-rates">
+        <div class="fx-row"><span class="fx-pair">Se încarcă...</span></div>
+      </div>
+      <div class="fx-updated" id="fx-updated"></div>
+    </div>
+
+    <div class="fx-box">
+      <div class="fx-head">Cripto</div>
+      <div id="fx-crypto">
+        <div class="fx-row"><span class="fx-pair">Se încarcă...</span></div>
+      </div>
+      <div class="fx-updated" id="fx-crypto-updated"></div>
+    </div>
+
     <div>
       <div class="sidebar-head">Cele mai citite</div>
       <div id="most-read"></div>
     </div>
 
+    <div class="fx-box">
+      <div class="fx-head">Știri internaționale</div>
+      <div id="intl-news">
+        <div class="fx-row"><span class="fx-pair">Se încarcă...</span></div>
+      </div>
+    </div>
+
     <div class="about-box">
       <p><strong>Buletinul zilnic.</strong> Un rezumat scurt, direct în inbox, în fiecare dimineață.</p>
-      <input type="email" placeholder="adresa@email.md">
-      <button onclick="alert('Mulțumim! (demo — abonare neconectată încă)')">Abonează-te</button>
+      <form id="newsletter-form" data-netlify="true" name="newsletter" method="POST">
+        <input type="hidden" name="form-name" value="newsletter">
+        <input type="email" name="email" placeholder="adresa@email.md" required>
+        <button type="submit">Abonează-te</button>
+      </form>
+      <p id="newsletter-msg" style="display:none; color: var(--teal); margin-top:8px; margin-bottom:0;">Mulțumim, te-ai abonat!</p>
     </div>
   </aside>
-</main>
+</div>
 
 <footer>
-  <span>© 2026 Actualmoment — buletin independent de actualitate</span>
+  <span>© 2026 actualmoment.md — buletin independent de actualitate</span>
   <span>Redacție &nbsp;·&nbsp; Contact &nbsp;·&nbsp; RSS</span>
 </footer>
 
@@ -478,38 +692,113 @@ function renderFilters(active) {
   });
 }
 
+let ALL_ARTICLES = ARTICLES;
+
+async function loadRealArticles() {
+  try {
+    const res = await fetch('https://api.github.com/repos/G9Plugin/actualmoment-site/contents/articles');
+    if (!res.ok) return [];
+    const files = await res.json();
+    if (!Array.isArray(files)) return [];
+    const jsonFiles = files.filter(f => f.name.endsWith('.json'));
+    const articles = await Promise.all(jsonFiles.map(async f => {
+      try {
+        const r = await fetch(f.download_url);
+        const data = await r.json();
+        const d = data.date ? new Date(data.date) : new Date();
+        return {
+          cat: data.cat || "Societate",
+          tag: data.tag || "",
+          title: data.title || "",
+          dek: data.dek || "",
+          place: (data.place || "").toUpperCase(),
+          time: d.toLocaleString('ro-RO', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }),
+          author: data.author || "Redacția",
+          image: data.image || null,
+          _date: d
+        };
+      } catch (e) { return null; }
+    }));
+    return articles.filter(Boolean).sort((a, b) => b._date - a._date);
+  } catch (e) {
+    console.error('Nu s-au putut încărca articolele reale:', e);
+    return [];
+  }
+}
+
+function shareLinks(title) {
+  const url = encodeURIComponent(window.location.href);
+  const text = encodeURIComponent(title);
+  return `
+    <div class="share-row" onclick="event.stopPropagation()">
+      <a href="https://wa.me/?text=${text}%20${url}" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=${url}" target="_blank" rel="noopener">Facebook</a>
+    </div>
+  `;
+}
+
 function renderFeed(filter) {
+  const heroZone = document.getElementById('hero-zone');
   const feed = document.getElementById('feed');
-  const list = ARTICLES.filter(a => filter === "Toate" || a.cat === filter);
+  const list = ALL_ARTICLES.filter(a => filter === "Toate" || a.cat === filter);
+  heroZone.innerHTML = '';
   feed.innerHTML = '';
 
   if (list.length === 0) {
-    feed.innerHTML = `<p style="font-family: var(--font-mono); font-size: 13px; color: var(--text-dim);">Nicio știre în această categorie momentan.</p>`;
+    heroZone.innerHTML = '';
+    feed.innerHTML = `<p style="font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); grid-column: 1/-1;">Nicio știre în această categorie momentan.</p>`;
     return;
   }
 
   const lead = list.find(a => a.lead) || list[0];
-  const rest = list.filter(a => a !== lead);
+  const sideItems = list.filter(a => a !== lead).slice(0, 2);
+  const rest = list.filter(a => a !== lead && !sideItems.includes(a));
 
-  const leadEl = document.createElement('div');
-  leadEl.className = 'lead-story';
-  leadEl.innerHTML = `
-    <div class="dateline">${lead.tag ? `<span class="tag">${lead.tag}</span>` : ''} ${lead.place} · ${lead.time} · ${lead.cat}</div>
-    <h2>${lead.title}</h2>
-    <p class="dek">${lead.dek}</p>
-    <div class="byline">— ${lead.author}</div>
+  const heroEl = document.createElement('div');
+  heroEl.className = 'hero-story';
+  heroEl.innerHTML = `
+    ${lead.image ? `<img class="hero-img" src="${lead.image}" alt="">` : ''}
+    <div class="hero-overlay">
+      <div class="dateline">${lead.tag ? `<span class="tag">${lead.tag}</span>` : ''} ${lead.place} · ${lead.time} · ${lead.cat}</div>
+      <h2>${lead.title}</h2>
+      <p class="dek">${lead.dek}</p>
+      <div class="byline">— ${lead.author}</div>
+      ${shareLinks(lead.title)}
+    </div>
   `;
-  feed.appendChild(leadEl);
+
+  const sideCol = document.createElement('div');
+  sideCol.className = 'hero-side';
+  sideItems.forEach(a => {
+    const el = document.createElement('div');
+    el.className = 'hero-side-item';
+    el.innerHTML = `
+      ${a.image ? `<img class="thumb" src="${a.image}" alt="">` : ''}
+      <div class="side-body">
+        <div class="dateline">${a.tag ? `<span class="tag">${a.tag}</span>` : ''} ${a.cat}</div>
+        <h4>${a.title}</h4>
+        <p class="dek">${a.dek}</p>
+      </div>
+    `;
+    sideCol.appendChild(el);
+  });
+
+  heroZone.appendChild(heroEl);
+  heroZone.appendChild(sideCol);
 
   rest.forEach((a) => {
-    const item = document.createElement('div');
-    item.className = 'story-item';
-    item.innerHTML = `
-      <div class="dateline">${a.tag ? `<span class="tag">${a.tag}</span>` : ''} ${a.place} · ${a.time} · ${a.cat}</div>
-      <h3>${a.title}</h3>
-      <p class="dek">${a.dek}</p>
+    const card = document.createElement('div');
+    card.className = 'mag-card';
+    card.innerHTML = `
+      ${a.image ? `<img class="thumb" src="${a.image}" alt="">` : ''}
+      <div class="card-body">
+        <div class="dateline">${a.tag ? `<span class="tag">${a.tag}</span>` : ''} ${a.place} · ${a.time} · ${a.cat}</div>
+        <h3>${a.title}</h3>
+        <p class="dek">${a.dek}</p>
+        ${shareLinks(a.title)}
+      </div>
     `;
-    feed.appendChild(item);
+    feed.appendChild(card);
   });
 }
 
@@ -527,11 +816,146 @@ function renderMostRead() {
   `).join('');
 }
 
-renderTicker();
-renderClock();
-renderFilters("Toate");
-renderFeed("Toate");
-renderMostRead();
+async function loadWeather() {
+  const box = document.getElementById('weather-box');
+  try {
+    const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.0105&longitude=28.8638&current_weather=true');
+    const data = await res.json();
+    const w = data.current_weather;
+    const codes = {
+      0: '☀️ Senin', 1: '🌤️ Predominant senin', 2: '⛅ Parțial înnorat', 3: '☁️ Înnorat',
+      45: '🌫️ Ceață', 48: '🌫️ Ceață', 51: '🌦️ Burniță', 61: '🌧️ Ploaie', 63: '🌧️ Ploaie',
+      65: '🌧️ Ploaie puternică', 71: '🌨️ Ninsoare', 80: '🌦️ Averse', 95: '⛈️ Furtună'
+    };
+    const desc = codes[w.weathercode] || '🌡️ Vreme';
+    box.innerHTML = `
+      <div style="font-family: var(--font-mono); font-size: 28px; font-weight: 700; color: var(--text);">${w.temperature}°C</div>
+      <div style="font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); margin-top: 4px;">${desc} · vânt ${w.windspeed} km/h</div>
+    `;
+  } catch (e) {
+    box.innerHTML = `<div style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim);">Date indisponibile momentan</div>`;
+    console.error('Vreme:', e);
+  }
+}
+
+async function loadIntlNews() {
+  const box = document.getElementById('intl-news');
+  try {
+    const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('http://feeds.bbci.co.uk/news/world/rss.xml'));
+    const data = await res.json();
+    if (!data.items) throw new Error('Fără date');
+    const items = data.items.slice(0, 5);
+    box.innerHTML = items.map(item => `
+      <a href="${item.link}" target="_blank" rel="noopener" style="display:block; padding: 8px 0; border-top: 1px solid var(--line); font-size: 13px; color: var(--text); text-decoration:none; line-height:1.4;">
+        ${item.title}
+      </a>
+    `).join('');
+  } catch (e) {
+    box.innerHTML = `<div style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim);">Știri indisponibile momentan</div>`;
+    console.error('Știri internaționale:', e);
+  }
+}
+
+function setupNewsletterForm() {
+  const form = document.getElementById('newsletter-form');
+  const msg = document.getElementById('newsletter-msg');
+  if (!form) return;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new URLSearchParams(new FormData(form)).toString();
+    try {
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData
+      });
+      form.style.display = 'none';
+      msg.style.display = 'block';
+    } catch (err) {
+      alert('A apărut o eroare. Încearcă din nou.');
+      console.error(err);
+    }
+  });
+}
+
+async function loadExchangeRates() {
+  const box = document.getElementById('fx-rates');
+  const updated = document.getElementById('fx-updated');
+  try {
+    const res = await fetch('https://open.er-api.com/v6/latest/USD');
+    const data = await res.json();
+    if (data.result !== 'success') throw new Error('API error');
+    const r = data.rates;
+    const mid = {
+      USD: r.MDL,
+      EUR: r.MDL / r.EUR,
+      RON: r.MDL / r.RON,
+      GBP: r.MDL / r.GBP
+    };
+    const row = (label, v) => `
+      <tr><td>${label}</td><td>${v.toFixed(2)} MDL</td></tr>`;
+    box.innerHTML = `
+      <table class="fx-table">
+        <tbody>
+          ${row('USD', mid.USD)}
+          ${row('EUR', mid.EUR)}
+          ${row('RON', mid.RON)}
+          ${row('GBP', mid.GBP)}
+        </tbody>
+      </table>
+    `;
+    const d = new Date(data.time_last_update_utc);
+    updated.textContent = 'Curs de referință · actualizat ' + d.toLocaleDateString('ro-RO', { day: '2-digit', month: 'short', year: 'numeric' });
+  } catch (e) {
+    box.innerHTML = `<div style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim);">Curs indisponibil momentan</div>`;
+    console.error('Curs valutar:', e);
+  }
+}
+
+async function loadCrypto() {
+  const box = document.getElementById('fx-crypto');
+  const updated = document.getElementById('fx-crypto-updated');
+  try {
+    const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true');
+    const data = await res.json();
+    const row = (label, price, change) => {
+      const cls = change >= 0 ? 'up' : 'down';
+      const arrow = change >= 0 ? '▲' : '▼';
+      return `<tr><td>${label}</td><td class="${cls}">$${price.toLocaleString('en-US', {maximumFractionDigits: 0})} ${arrow} ${Math.abs(change).toFixed(1)}%</td></tr>`;
+    };
+    box.innerHTML = `
+      <table class="fx-table">
+        <tbody>
+          ${row('BTC', data.bitcoin.usd, data.bitcoin.usd_24h_change)}
+          ${row('ETH', data.ethereum.usd, data.ethereum.usd_24h_change)}
+        </tbody>
+      </table>
+    `;
+    updated.textContent = 'Preț live · variație 24h';
+  } catch (e) {
+    box.innerHTML = `<div style="font-family: var(--font-mono); font-size: 12px; color: var(--text-dim);">Date indisponibile momentan</div>`;
+    console.error('Crypto:', e);
+  }
+}
+
+async function init() {
+  renderTicker();
+  renderClock();
+  renderFilters("Toate");
+  loadExchangeRates();
+  loadCrypto();
+  loadWeather();
+  loadIntlNews();
+  setupNewsletterForm();
+  const real = await loadRealArticles();
+  if (real.length > 0) {
+    ALL_ARTICLES = real;
+  }
+  renderFeed("Toate");
+  renderMostRead();
+}
+
+init();
 </script>
 
 </body>
